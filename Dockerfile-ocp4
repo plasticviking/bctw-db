@@ -42,7 +42,7 @@ LABEL summary=$SUMMARY \
       usage="podman run -d --name postgresql_database -e POSTGRESQL_USER=user -e POSTGRESQL_PASSWORD=pass -e POSTGRESQL_DATABASE=db -p 5432:5432 rhscl/postgresql-$POSTGRESQL_VERSION-rhel7" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
 
-USER 1
+USER 0
 
 COPY root/usr/libexec/fix-permissions /usr/libexec/fix-permissions
 
@@ -110,13 +110,9 @@ RUN cd /tmp && \
 RUN yum install -y postgis31_12 postgis31_12-client pgrouting_12
 
 RUN /usr/bin/install -c -m 755  /usr/pgsql-12/lib/postgis* '/opt/rh/rh-postgresql12/root/usr/lib64/pgsql/' && \
-    /usr/bin/install -c -m 755  /usr/pgsql-12/lib/libpgrouting* '/opt/rh/rh-postgresql12/root/usr/lib64/pgsql/' && \
     /usr/bin/install -c -m 755  /usr/pgsql-12/lib/pgcrypto* '/opt/rh/rh-postgresql12/root/usr/lib64/pgsql/' && \
-    /usr/bin/install -c -m 755  /usr/pgsql-12/lib/fuzzystrmatch* '/opt/rh/rh-postgresql12/root/usr/lib64/pgsql/' && \    
     /usr/bin/install -c -m 644 /usr/pgsql-12/share/extension/postgis* '/opt/rh/rh-postgresql12/root/usr/share/pgsql/extension/' && \
-    /usr/bin/install -c -m 644 /usr/pgsql-12/share/extension/pgrouting* '/opt/rh/rh-postgresql12/root/usr/share/pgsql/extension/' && \
     /usr/bin/install -c -m 644 /usr/pgsql-12/share/extension/pgcrypto* '/opt/rh/rh-postgresql12/root/usr/share/pgsql/extension/' && \
-    /usr/bin/install -c -m 644 /usr/pgsql-12/share/extension/fuzzystrmatch* '/opt/rh/rh-postgresql12/root/usr/share/pgsql/extension/' && \
     mv /usr/pgsql-12/share/contrib/postgis-3.1/ /opt/rh/rh-postgresql12/root/usr/share/pgsql/contrib/ 
    
 RUN rm -rf /tmp/pgdg-redhat-repo-latest.noarch.rpm /var/cache/yum
