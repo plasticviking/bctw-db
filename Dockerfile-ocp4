@@ -42,6 +42,8 @@ LABEL summary=$SUMMARY \
       usage="podman run -d --name postgresql_database -e POSTGRESQL_USER=user -e POSTGRESQL_PASSWORD=pass -e POSTGRESQL_DATABASE=db -p 5432:5432 rhscl/postgresql-$POSTGRESQL_VERSION-rhel7" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
 
+USER 1
+
 COPY root/usr/libexec/fix-permissions /usr/libexec/fix-permissions
 
 # Copy entitlements and subscription manager configurations
@@ -60,8 +62,8 @@ COPY ./rhsm-ca /etc/rhsm/ca
 # This is a workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1479388
 # Initialize /etc/yum.repos.d/redhat.repo
 # See https://access.redhat.com/solutions/1443553
-#RUN rm /etc/rhsm-host && \
-RUN    yum repolist > /dev/null && \
+RUN rm /etc/rhsm-host && \
+    yum repolist > /dev/null && \
     yum install -y yum-utils gettext && \
     yum-config-manager --disable \* &> /dev/null && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
