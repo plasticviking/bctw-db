@@ -60,8 +60,8 @@ COPY ./rhsm-ca /etc/rhsm/ca
 # This is a workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1479388
 # Initialize /etc/yum.repos.d/redhat.repo
 # See https://access.redhat.com/solutions/1443553
-RUN rm /etc/rhsm-host && \
-    yum repolist > /dev/null && \
+#RUN rm /etc/rhsm-host && \
+RUN    yum repolist > /dev/null && \
     yum install -y yum-utils gettext && \
     yum-config-manager --disable \* &> /dev/null && \
     yum-config-manager --enable rhel-server-rhscl-7-rpms && \
@@ -120,8 +120,7 @@ RUN /usr/bin/install -c -m 755  /usr/pgsql-12/lib/postgis* '/opt/rh/rh-postgresq
 RUN rm -rf /tmp/pgdg-redhat-repo-latest.noarch.rpm /var/cache/yum
 
 # Remove entitlements and Subscription Manager configs
-RUN rm -rf /etc/pki/entitlement && \
-    rm -rf /etc/rhsm
+RUN rm -rf /etc/pki/entitlement && rm -rf /etc/rhsm/rhsm-conf && rm -fr /etc/rhsm/ca
 
 RUN bash /usr/libexec/fix-permissions /var/lib/pgsql
 
