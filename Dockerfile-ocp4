@@ -70,7 +70,6 @@ RUN rm /etc/rhsm-host && \
     yum-config-manager --enable rhel-7-server-rpms && \
     yum-config-manager --enable rhel-7-server-optional-rpms && \
     INSTALL_PKGS="rsync tar gettext bind-utils nss_wrapper" && \
-    INSTALL_PKGS="$INSTALL_PKGS rh-postgresql$POSTGRESQL_VERSION-pgaudit" && \
     yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS
 
